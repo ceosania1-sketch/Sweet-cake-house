@@ -1,0 +1,5951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sweet Cake House | Premium Cakes</title>
+
+    <meta name="description"
+          content="Order delicious premium cakes online from Sweet Cake House.">
+
+    <meta name="theme-color" content="#ff4f91">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        /* =========================================================
+           SWEET CAKE HOUSE
+           PART 1
+           HTML + CSS
+           ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --pink: #ff4f91;
+            --dark-pink: #e62e73;
+            --light-pink: #fff0f6;
+            --soft-pink: #ffe1ec;
+            --white: #ffffff;
+            --black: #222222;
+            --gray: #777777;
+            --border: #eeeeee;
+            --shadow: 0 15px 45px rgba(255, 79, 145, 0.15);
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #fffafd;
+            color: var(--black);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* =========================================================
+           LOADING SCREEN
+           ========================================================= */
+
+        #loadingScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background:
+                radial-gradient(circle at top left, #ffd9e8, transparent 35%),
+                linear-gradient(135deg, #fff7fa, #ffe4ef);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity .7s ease, visibility .7s ease;
+        }
+
+        #loadingScreen.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-box {
+            text-align: center;
+        }
+
+        .loader-cake {
+            width: 90px;
+            height: 75px;
+            position: relative;
+            margin: auto auto 25px;
+        }
+
+        .cake-base {
+            position: absolute;
+            width: 82px;
+            height: 38px;
+            left: 4px;
+            bottom: 4px;
+            background: linear-gradient(180deg, #ffb5ce, #ff6f9f);
+            border-radius: 8px 8px 15px 15px;
+            box-shadow: 0 8px 20px rgba(255,79,145,.25);
+        }
+
+        .cake-cream {
+            position: absolute;
+            width: 86px;
+            height: 18px;
+            left: 2px;
+            bottom: 32px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .candle {
+            position: absolute;
+            width: 7px;
+            height: 25px;
+            background: #ffd166;
+            left: 41px;
+            top: 0;
+            border-radius: 4px;
+        }
+
+        .flame {
+            position: absolute;
+            width: 12px;
+            height: 17px;
+            background: #ff9f1c;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            top: -11px;
+            left: 38px;
+            animation: flame 0.6s infinite alternate;
+        }
+
+        @keyframes flame {
+            from {
+                transform: rotate(-45deg) scale(.9);
+            }
+
+            to {
+                transform: rotate(-45deg) scale(1.1);
+            }
+        }
+
+        .loader-title {
+            font-family: "Pacifico", cursive;
+            font-size: 34px;
+            color: var(--pink);
+        }
+
+        .loader-text {
+            color: var(--gray);
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .loader-bar {
+            width: 220px;
+            height: 6px;
+            background: #ffd5e5;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px auto 0;
+        }
+
+        .loader-progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #ff4f91, #ff8ab5);
+            border-radius: inherit;
+            animation: loading 2.2s forwards;
+        }
+
+        @keyframes loading {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* =========================================================
+           TOP BAR
+           ========================================================= */
+
+        .top-bar {
+            background: #24151d;
+            color: white;
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            font-size: 12px;
+        }
+
+        .top-bar-left,
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .top-bar i {
+            color: #ff77a9;
+            margin-right: 5px;
+        }
+
+        /* =========================================================
+           HEADER
+           ========================================================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 5000;
+            background: rgba(255,255,255,.94);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0,0,0,.05);
+        }
+
+        .navbar {
+            min-height: 78px;
+            padding: 0 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 15px;
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 22px;
+            background: linear-gradient(135deg, #ff4f91, #ff8eb7);
+            box-shadow: 0 8px 20px rgba(255,79,145,.25);
+        }
+
+        .logo-text {
+            font-family: "Pacifico", cursive;
+            color: var(--pink);
+            font-size: 23px;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 27px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 600;
+            transition: .3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            left: 0;
+            bottom: -7px;
+            background: var(--pink);
+            transition: .3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--pink);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            width: 43px;
+            height: 43px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            color: #333;
+            position: relative;
+            transition: .3s;
+        }
+
+        .icon-btn:hover {
+            color: white;
+            background: var(--pink);
+            border-color: var(--pink);
+            transform: translateY(-2px);
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            min-width: 19px;
+            height: 19px;
+            padding: 0 5px;
+            background: var(--pink);
+            color: white;
+            border-radius: 20px;
+            font-size: 10px;
+            display: grid;
+            place-items: center;
+            border: 2px solid white;
+        }
+
+        .menu-btn {
+            display: none;
+        }
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .hero {
+            min-height: 680px;
+            padding: 80px 6%;
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            align-items: center;
+            gap: 50px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 80% 20%, #ffd9e7 0, transparent 30%),
+                linear-gradient(135deg, #fff8fb 0%, #fff0f6 100%);
+        }
+
+        .hero::before {
+            content: "";
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: absolute;
+            left: -150px;
+            bottom: -130px;
+            background: rgba(255,79,145,.08);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 16px;
+            background: white;
+            color: var(--pink);
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.06);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 5vw, 72px);
+            line-height: 1.08;
+            letter-spacing: -2px;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: var(--pink);
+            font-family: "Pacifico", cursive;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            max-width: 570px;
+            color: #707070;
+            line-height: 1.8;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            padding: 14px 24px;
+            border-radius: 13px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: .3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff4f91, #ff77a7);
+            color: white;
+            box-shadow: 0 12px 25px rgba(255,79,145,.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 17px 30px rgba(255,79,145,.3);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid #ffd0df;
+            color: var(--pink);
+        }
+
+        .btn-outline:hover {
+            background: var(--light-pink);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 35px;
+            margin-top: 42px;
+            flex-wrap: wrap;
+        }
+
+        .stat strong {
+            font-size: 22px;
+            display: block;
+        }
+
+        .stat span {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .hero-visual {
+            position: relative;
+            min-height: 500px;
+            display: grid;
+            place-items: center;
+        }
+
+        .hero-circle {
+            width: min(440px, 80vw);
+            height: min(440px, 80vw);
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ffd8e7, #fff);
+            box-shadow: 0 30px 70px rgba(255,79,145,.18);
+            display: grid;
+            place-items: center;
+            position: relative;
+        }
+
+        .hero-cake {
+            font-size: 190px;
+            filter: drop-shadow(0 25px 20px rgba(0,0,0,.12));
+            animation: cakeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes cakeFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(2deg);
+            }
+        }
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            padding: 13px 17px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .floating-card i {
+            width: 35px;
+            height: 35px;
+            border-radius: 11px;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: var(--pink);
+        }
+
+        .card-one {
+            top: 50px;
+            left: 10px;
+        }
+
+        .card-two {
+            right: 0;
+            bottom: 70px;
+        }
+
+        /* =========================================================
+           SECTION COMMON
+           ========================================================= */
+
+        section {
+            padding: 90px 6%;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-heading small {
+            color: var(--pink);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            margin: 8px 0 12px;
+        }
+
+        .section-heading p {
+            max-width: 620px;
+            margin: auto;
+            color: #888;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* =========================================================
+           CATEGORY SECTION
+           ========================================================= */
+
+        .categories {
+            background: white;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 17px;
+        }
+
+        .category-card {
+            background: #fff;
+            border: 1px solid #f0e5e9;
+            padding: 24px 10px;
+            border-radius: 20px;
+            text-align: center;
+            transition: .3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-7px);
+            border-color: #ffc3d8;
+            box-shadow: var(--shadow);
+        }
+
+        .category-icon {
+            width: 65px;
+            height: 65px;
+            margin: auto auto 13px;
+            border-radius: 20px;
+            display: grid;
+            place-items: center;
+            font-size: 27px;
+            background: var(--light-pink);
+        }
+
+        .category-card h3 {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .category-card p {
+            color: #999;
+            font-size: 10px;
+        }
+
+        /* =========================================================
+           FEATURE STRIP
+           ========================================================= */
+
+        .feature-strip {
+            padding: 35px 6%;
+            background: #24151d;
+            color: white;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            background: rgba(255,255,255,.1);
+            display: grid;
+            place-items: center;
+            color: #ff75a5;
+            font-size: 20px;
+        }
+
+        .feature h4 {
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .feature p {
+            color: #b8afb3;
+            font-size: 10px;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1050px) {
+
+            .nav-links {
+                gap: 16px;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons,
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                min-height: 430px;
+            }
+        }
+
+        @media (max-width: 800px) {
+
+            .top-bar {
+                display: none;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 79px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 79px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 40px;
+                transition: .4s;
+                box-shadow: 0 20px 40px rgba(0,0,0,.08);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-btn {
+                display: grid;
+            }
+
+            .hero {
+                padding-top: 55px;
+            }
+
+            .feature-strip {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 560px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .logo-text {
+                font-size: 19px;
+            }
+
+            .logo-icon {
+                width: 42px;
+                height: 42px;
+            }
+
+            .nav-actions .icon-btn:not(.menu-btn) {
+                display: none;
+            }
+
+            .hero {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .hero h1 {
+                font-size: 39px;
+            }
+
+            .hero-circle {
+                width: 310px;
+                height: 310px;
+            }
+
+            .hero-cake {
+                font-size: 125px;
+            }
+
+            .floating-card {
+                transform: scale(.85);
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            section {
+                padding: 65px 5%;
+            }
+
+            .feature-strip {
+                grid-template-columns: 1fr;
+                padding-left: 7%;
+                padding-right: 7%;
+            }
+        }
+
+    </style>
+</head>
+
+    <!-- =========================================================
+         LOADING SCREEN
+         ========================================================= -->
+
+    <div id="loadingScreen">
+
+        <div class="loader-box">
+
+            <div class="loader-cake">
+
+                <div class="candle"></div>
+
+                <div class="flame"></div>
+
+                <div class="cake-cream"></div>
+
+                <div class="cake-base"></div>
+
+            </div>
+
+            <div class="loader-title">
+                Sweet Cake House
+            </div>
+
+            <div class="loader-text">
+                Preparing something delicious...
+            </div>
+
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         TOP BAR
+         ========================================================= -->
+
+    <div class="top-bar">
+
+        <div class="top-bar-left">
+
+            <span>
+                <i class="fa-solid fa-truck"></i>
+                Fast Delivery
+            </span>
+
+            <span>
+                <i class="fa-solid fa-shield-heart"></i>
+                Fresh & Hygienic
+            </span>
+
+        </div>
+
+        <div class="top-bar-right">
+
+            <span>
+                <i class="fa-solid fa-phone"></i>
+                03015045169
+            </span>
+
+            <span>
+                <i class="fa-brands fa-whatsapp"></i>
+                WhatsApp Orders
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <a href="#" class="logo">
+
+                <div class="logo-icon">
+                    <i class="fa-solid fa-cake-candles"></i>
+                </div>
+
+                <span class="logo-text">
+                    Sweet Cake House
+                </span>
+
+            </a>
+
+
+            <ul class="nav-links" id="navLinks">
+
+                <li>
+                    <a href="#home">Home</a>
+                </li>
+
+                <li>
+                    <a href="#categories">Categories</a>
+                </li>
+
+                <li>
+                    <a href="#cakes">Cakes</a>
+                </li>
+
+                <li>
+                    <a href="#offers">Offers</a>
+                </li>
+
+                <li>
+                    <a href="#reviews">Reviews</a>
+                </li>
+
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+
+            </ul>
+
+
+            <div class="nav-actions">
+
+                <button class="icon-btn" title="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
+                <button class="icon-btn" title="Wishlist">
+                    <i class="fa-regular fa-heart"></i>
+                    <span class="badge">0</span>
+                </button>
+
+                <button class="icon-btn" title="Cart">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="badge">0</span>
+                </button>
+
+                <button
+                    class="icon-btn menu-btn"
+                    id="menuBtn"
+                    title="Menu">
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================================================
+         HERO
+         ========================================================= -->
+
+    <main>
+
+        <section class="hero" id="home">
+
+            <div class="hero-content">
+
+                <div class="hero-tag">
+                    <i class="fa-solid fa-sparkles"></i>
+                    Freshly Baked With Love
+                </div>
+
+                <h1>
+                    Every Bite
+                    <br>
+                    Feels Like
+                    <span>Love.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Discover delicious handcrafted cakes made with
+                    premium ingredients, beautiful designs and lots
+                    of love. Perfect for birthdays, weddings,
+                    anniversaries and every special celebration.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#cakes" class="btn btn-primary">
+                        <i class="fa-solid fa-cake-candles"></i>
+                        Explore Cakes
+                    </a>
+
+                    <a href="tel:03015045169" class="btn btn-outline">
+                        <i class="fa-solid fa-phone"></i>
+                        Call Now
+                    </a>
+
+                </div>
+
+
+                <div class="hero-stats">
+
+                    <div class="stat">
+                        <strong>500+</strong>
+                        <span>Happy Customers</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>100+</strong>
+                        <span>Cake Designs</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>4.9★</strong>
+                        <span>Customer Rating</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-visual">
+
+                <div class="hero-circle">
+
+                    <div class="hero-cake">
+                        🎂
+                    </div>
+
+                </div>
+
+                <div class="floating-card card-one">
+
+                    <i class="fa-solid fa-star"></i>
+
+                    <div>
+                        <strong>4.9 Rating</strong>
+                        <br>
+                        <small>Happy Customers</small>
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card card-two">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                    <div>
+                        <strong>Made With Love</strong>
+                        <br>
+                        <small>Fresh Every Day</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FEATURES
+             ===================================================== -->
+
+        <div class="feature-strip">
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+
+                <div>
+                    <h4>Fast Delivery</h4>
+                    <p>Fresh cakes delivered safely</p>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+
+                <div>
+                    <h4>Fresh Ingredients</h4>
+                    <p>Quality ingredients only</p>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+
+                <div>
+                    <h4>Custom Designs</h4>
+                    <p>Your dream cake, your way</p>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+
+                <div>
+                    <h4>Easy Support</h4>
+                    <p>Call 03015045169</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             CATEGORIES
+             ===================================================== -->
+
+        <section class="categories" id="categories">
+
+            <div class="section-heading">
+
+                <small>Choose Your Favorite</small>
+
+                <h2>Shop By Category</h2>
+
+                <p>
+                    Find the perfect cake for your special moment.
+                    Choose from our delicious collection.
+                </p>
+
+            </div>
+
+
+            <div class="category-grid">
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🎂
+                    </div>
+
+                    <h3>Birthday Cakes</h3>
+
+                    <p>Sweet celebrations</p>
+
+                </div>
+
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        💍
+                    </div>
+
+                    <h3>Wedding Cakes</h3>
+
+                    <p>Elegant designs</p>
+
+                </div>
+
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🍫
+                    </div>
+
+                    <h3>Chocolate Cakes</h3>
+
+                    <p>Rich & creamy</p>
+
+                </div>
+
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🍓
+                    </div>
+
+                    <h3>Fresh Cream</h3>
+
+                    <p>Light & delicious</p>
+
+                </div>
+
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🧁
+                    </div>
+
+                    <h3>Cupcakes</h3>
+
+                    <p>Little treats</p>
+
+                </div>
+
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        ✨
+                    </div>
+
+                    <h3>Custom Cakes</h3>
+
+                    <p>Your own design</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         BASIC JAVASCRIPT
+         ========================================================= -->
+
+    <script>
+
+        /* Loading Screen */
+
+        window.addEventListener("load", function () {
+
+            setTimeout(function () {
+
+                const loader =
+                    document.getElementById("loadingScreen");
+
+                if (loader) {
+                    loader.classList.add("hide");
+                }
+
+            }, 2300);
+
+        });
+
+
+        /* Mobile Menu */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+        const navLinks =
+            document.getElementById("navLinks");
+
+        if (menuBtn) {
+
+            menuBtn.addEventListener("click", function () {
+
+                navLinks.classList.toggle("active");
+
+                const icon =
+                    menuBtn.querySelector("i");
+
+                if (navLinks.classList.contains("active")) {
+
+                    icon.classList.remove("fa-bars");
+                    icon.classList.add("fa-xmark");
+
+                } else {
+
+                    icon.classList.remove("fa-xmark");
+                    icon.classList.add("fa-bars");
+
+                }
+
+            });
+
+        }
+
+
+        /* Close Mobile Menu After Clicking */
+
+        document.querySelectorAll(".nav-links a")
+            .forEach(function (link) {
+
+                link.addEventListener("click", function () {
+
+                    navLinks.classList.remove("active");
+
+                    if (menuBtn) {
+
+                        const icon =
+                            menuBtn.querySelector("i");
+
+                        icon.classList.remove("fa-xmark");
+                        icon.classList.add("fa-bars");
+
+                    }
+
+                });
+
+            });
+
+    </script>
+
+</body>
+</html>
+<!-- =========================================================
+     PART 2 — CAKE PRODUCTS + SEARCH + FILTER
+     PART 1 KE BAAD YAHAN SE PASTE KAREIN
+     ========================================================= -->
+
+
+<!-- =========================================================
+     CAKE SHOP SECTION
+     ========================================================= -->
+
+<section class="cake-shop" id="cakes">
+
+    <div class="section-heading">
+
+        <small>Our Delicious Collection</small>
+
+        <h2>Explore Our Cakes</h2>
+
+        <p>
+            Choose your favorite cake and add it to your cart.
+            Freshly prepared for every special occasion.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         SEARCH + FILTER BAR
+         ===================================================== -->
+
+    <div class="shop-controls">
+
+        <div class="cake-search">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="cakeSearch"
+                placeholder="Search your favorite cake..."
+            >
+
+        </div>
+
+
+        <div class="category-filter">
+
+            <button
+                class="filter-btn active"
+                data-filter="all">
+                All Cakes
+            </button>
+
+            <button
+                class="filter-btn"
+                data-filter="birthday">
+                Birthday
+            </button>
+
+            <button
+                class="filter-btn"
+                data-filter="chocolate">
+                Chocolate
+            </button>
+
+            <button
+                class="filter-btn"
+                data-filter="wedding">
+                Wedding
+            </button>
+
+            <button
+                class="filter-btn"
+                data-filter="cream">
+                Cream
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CAKE PRODUCTS GRID
+         ===================================================== -->
+
+    <div class="cake-grid" id="cakeGrid">
+
+
+        <!-- Cake 1 -->
+
+        <article
+            class="cake-card"
+            data-category="birthday"
+            data-name="pink birthday cake">
+
+            <div class="cake-image">
+
+                <span class="sale-badge">
+                    -15%
+                </span>
+
+                <button
+                    class="wishlist-btn"
+                    data-id="1"
+                    aria-label="Add to wishlist">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </button>
+
+                <div class="cake-emoji">
+                    🎂
+                </div>
+
+                <button
+                    class="quick-view"
+                    data-id="1">
+
+                    <i class="fa-solid fa-eye"></i>
+                    Quick View
+
+                </button>
+
+            </div>
+
+
+            <div class="cake-info">
+
+                <div class="cake-category">
+                    Birthday Cake
+                </div>
+
+                <h3>
+                    Pink Birthday Cake
+                </h3>
+
+                <div class="rating">
+
+                    <span>★★★★★</span>
+
+                    <small>
+                        (48)
+                    </small>
+
+                </div>
+
+
+                <div class="cake-bottom">
+
+                    <div class="price">
+
+                        <del>
+                            Rs. 3,500
+                        </del>
+
+                        <strong>
+                            Rs. 2,975
+                        </strong>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-id="1">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- Cake 2 -->
+
+        <article
+            class="cake-card"
+            data-category="chocolate"
+            data-name="chocolate dream cake">
+
+            <div class="cake-image">
+
+                <span class="popular-badge">
+                    Popular
+                </span>
+
+                <button
+                    class="wishlist-btn"
+                    data-id="2">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </button>
+
+                <div class="cake-emoji">
+                    🍫
+                </div>
+
+                <button
+                    class="quick-view"
+                    data-id="2">
+
+                    <i class="fa-solid fa-eye"></i>
+                    Quick View
+
+                </button>
+
+            </div>
+
+
+            <div class="cake-info">
+
+                <div class="cake-category">
+                    Chocolate
+                </div>
+
+                <h3>
+                    Chocolate Dream Cake
+                </h3>
+
+                <div class="rating">
+
+                    <span>★★★★★</span>
+
+                    <small>
+                        (72)
+                    </small>
+
+                </div>
+
+
+                <div class="cake-bottom">
+
+                    <div class="price">
+
+                        <del>
+                            Rs. 4,000
+                        </del>
+
+                        <strong>
+                            Rs. 3,499
+                        </strong>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-id="2">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- Cake 3 -->
+
+        <article
+            class="cake-card"
+            data-category="cream"
+            data-name="strawberry cream cake">
+
+            <div class="cake-image">
+
+                <span class="new-badge">
+                    New
+                </span>
+
+                <button
+                    class="wishlist-btn"
+                    data-id="3">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </button>
+
+                <div class="cake-emoji">
+                    🍓
+                </div>
+
+                <button
+                    class="quick-view"
+                    data-id="3">
+
+                    <i class="fa-solid fa-eye"></i>
+                    Quick View
+
+                </button>
+
+            </div>
+
+
+            <div class="cake-info">
+
+                <div class="cake-category">
+                    Fresh Cream
+                </div>
+
+                <h3>
+                    Strawberry Cream Cake
+                </h3>
+
+                <div class="rating">
+
+                    <span>★★★★★</span>
+
+                    <small>
+                        (35)
+                    </small>
+
+                </div>
+
+
+                <div class="cake-bottom">
+
+                    <div class="price">
+
+                        <strong>
+                            Rs. 3,200
+                        </strong>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-id="3">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- Cake 4 -->
+
+        <article
+            class="cake-card"
+            data-category="wedding"
+            data-name="royal wedding cake">
+
+            <div class="cake-image">
+
+                <span class="premium-badge">
+                    Premium
+                </span>
+
+                <button
+                    class="wishlist-btn"
+                    data-id="4">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </button>
+
+                <div class="cake-emoji">
+                    💍
+                </div>
+
+                <button
+                    class="quick-view"
+                    data-id="4">
+
+                    <i class="fa-solid fa-eye"></i>
+                    Quick View
+
+                </button>
+
+            </div>
+
+
+            <div class="cake-info">
+
+                <div class="cake-category">
+                    Wedding Cake
+                </div>
+
+                <h3>
+                    Royal Wedding Cake
+                </h3>
+
+                <div class="rating">
+
+                    <span>★★★★★</span>
+
+                    <small>
+                        (26)
+                    </small>
+
+                </div>
+
+
+                <div class="cake-bottom">
+
+                    <div class="price">
+
+                        <strong>
+                            Rs. 8,999
+                        </strong>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-id="4">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- Cake 5 -->
+
+        <article
+            class="cake-card"
+            data-category="birthday"
+            data-name="rainbow birthday cake">
+
+            <div class="cake-image">
+
+                <span class="new-badge">
+                    New
+                </span>
+
+                <button
+                    class="wishlist-btn"
+                    data-id="5">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </button>
+
+                <div class="cake-emoji">
+                    🌈
+                </div>
+
+                <button
+                    class="quick-view"
+                    data-id="5">
+
+                    <i class="fa-solid fa-eye"></i>
+                    Quick View
+
+                </button>
+
+            </div>
+
+
+            <div class="cake-info">
+
+                <div class="cake-category">
+                    Birthday Cake
+                </div>
+
+                <h3>
+                    Rainbow Birthday Cake
+                </h3>
+
+                <div class="rating">
+
+                    <span>★★★★★</span>
+
+                    <small>
+                        (41)
+                    </small>
+
+                </div>
+
+
+                <div class="cake-bottom">
+
+                    <div class="price">
+
+                        <strong>
+                            Rs. 3,750
+                        </strong>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-id="5">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- Cake 6 -->
+
+        <article
+            class="cake-card"
+            data-category="chocolate"
+            data-name="dark chocolate cake">
+
+            <div class="cake-image">
+
+                <span class="sale-badge">
+                    -20%
+                </span>
+
+                <button
+                    class="wishlist-btn"
+                    data-id="6">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </button>
+
+                <div class="cake-emoji">
+                    🍰
+                </div>
+
+                <button
+                    class="quick-view"
+                    data-id="6">
+
+                    <i class="fa-solid fa-eye"></i>
+                    Quick View
+
+                </button>
+
+            </div>
+
+
+            <div class="cake-info">
+
+                <div class="cake-category">
+                    Chocolate
+                </div>
+
+                <h3>
+                    Dark Chocolate Cake
+                </h3>
+
+                <div class="rating">
+
+                    <span>★★★★★</span>
+
+                    <small>
+                        (63)
+                    </small>
+
+                </div>
+
+
+                <div class="cake-bottom">
+
+                    <div class="price">
+
+                        <del>
+                            Rs. 4,500
+                        </del>
+
+                        <strong>
+                            Rs. 3,600
+                        </strong>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-id="6">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- Cake 7 -->
+
+        <article
+            class="cake-card"
+            data-category="cream"
+            data-name="vanilla cream cake">
+
+            <div class="cake-image">
+
+                <button
+                    class="wishlist-btn"
+                    data-id="7">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </button>
+
+                <div class="cake-emoji">
+                    🍥
+                </div>
+
+                <button
+                    class="quick-view"
+                    data-id="7">
+
+                    <i class="fa-solid fa-eye"></i>
+                    Quick View
+
+                </button>
+
+            </div>
+
+
+            <div class="cake-info">
+
+                <div class="cake-category">
+                    Fresh Cream
+                </div>
+
+                <h3>
+                    Vanilla Cream Cake
+                </h3>
+
+                <div class="rating">
+
+                    <span>★★★★★</span>
+
+                    <small>
+                        (29)
+                    </small>
+
+                </div>
+
+
+                <div class="cake-bottom">
+
+                    <div class="price">
+
+                        <strong>
+                            Rs. 2,800
+                        </strong>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-id="7">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- Cake 8 -->
+
+        <article
+            class="cake-card"
+            data-category="birthday"
+            data-name="red velvet birthday cake">
+
+            <div class="cake-image">
+
+                <span class="popular-badge">
+                    Best Seller
+                </span>
+
+                <button
+                    class="wishlist-btn"
+                    data-id="8">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </button>
+
+                <div class="cake-emoji">
+                    ❤️
+                </div>
+
+                <button
+                    class="quick-view"
+                    data-id="8">
+
+                    <i class="fa-solid fa-eye"></i>
+                    Quick View
+
+                </button>
+
+            </div>
+
+
+            <div class="cake-info">
+
+                <div class="cake-category">
+                    Birthday Cake
+                </div>
+
+                <h3>
+                    Red Velvet Cake
+                </h3>
+
+                <div class="rating">
+
+                    <span>★★★★★</span>
+
+                    <small>
+                        (91)
+                    </small>
+
+                </div>
+
+
+                <div class="cake-bottom">
+
+                    <div class="price">
+
+                        <strong>
+                            Rs. 4,200
+                        </strong>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-id="8">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- =====================================================
+         EMPTY SEARCH MESSAGE
+         ===================================================== -->
+
+    <div
+        id="noCakes"
+        class="no-cakes"
+        style="display:none;">
+
+        <div class="no-cakes-icon">
+            🔎
+        </div>
+
+        <h3>
+            No Cake Found
+        </h3>
+
+        <p>
+            Try searching for another delicious cake.
+        </p>
+
+    </div>
+
+
+    <div class="view-all-wrapper">
+
+        <button
+            class="btn btn-primary"
+            id="viewAllCakes">
+
+            View All Cakes
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     QUICK VIEW MODAL
+     ========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="quickViewModal">
+
+    <div class="quick-modal">
+
+        <button
+            class="modal-close"
+            id="modalClose">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <div class="modal-cake-image">
+
+            <div id="modalCakeEmoji">
+                🎂
+            </div>
+
+        </div>
+
+
+        <div class="modal-details">
+
+            <small id="modalCategory">
+                Birthday Cake
+            </small>
+
+            <h2 id="modalTitle">
+                Pink Birthday Cake
+            </h2>
+
+            <div class="modal-rating">
+                ★★★★★
+                <span id="modalReviews">
+                    48 reviews
+                </span>
+            </div>
+
+            <p id="modalDescription">
+
+                A delicious handcrafted cake prepared
+                with fresh ingredients and beautiful
+                decoration.
+
+            </p>
+
+
+            <div class="modal-price">
+                <strong id="modalPrice">
+                    Rs. 2,975
+                </strong>
+            </div>
+
+
+            <div class="quantity-control">
+
+
+    .category-filter {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+
+    .filter-btn {
+        border: 1px solid #eee;
+        background: white;
+        color: #666;
+        padding: 9px 14px;
+        border-radius: 10px;
+        f
+              <!-- =========================================================
+     PART 3 — SHOPPING CART
+     PART 2 KE BILKUL NEECHAY PASTE KAREIN
+     ========================================================= -->
+
+
+<!-- =========================================================
+     CART OVERLAY
+     ========================================================= -->
+
+<div class="cart-overlay" id="cartOverlay"></div>
+
+
+<!-- =========================================================
+     CART DRAWER
+     ========================================================= -->
+
+<aside class="cart-drawer" id="cartDrawer">
+
+    <div class="cart-header">
+
+        <div>
+            <small>Your Order</small>
+            <h2>Shopping Cart</h2>
+        </div>
+
+        <button
+            class="cart-close"
+            id="cartClose"
+            aria-label="Close cart">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+    </div>
+
+
+    <!-- CART ITEMS -->
+
+    <div class="cart-items" id="cartItems">
+
+        <!-- JavaScript se items yahan aayenge -->
+
+    </div>
+
+
+    <!-- EMPTY CART -->
+
+    <div class="empty-cart" id="emptyCart">
+
+        <div class="empty-cart-icon">
+            🛒
+        </div>
+
+        <h3>Your Cart Is Empty</h3>
+
+        <p>
+            Add some delicious cakes to your cart.
+        </p>
+
+        <button
+            class="btn btn-primary"
+            id="startShopping">
+
+            <i class="fa-solid fa-cake-candles"></i>
+
+            Start Shopping
+
+        </button>
+
+    </div>
+
+
+    <!-- CART FOOTER -->
+
+    <div class="cart-footer" id="cartFooter">
+
+
+        <!-- COUPON -->
+
+        <div class="coupon-box">
+
+            <div class="coupon-title">
+
+                <i class="fa-solid fa-ticket"></i>
+
+                Have a coupon?
+
+            </div>
+
+            <div class="coupon-input">
+
+                <input
+                    type="text"
+                    id="couponInput"
+                    placeholder="Enter coupon code">
+
+                <button id="applyCoupon">
+                    Apply
+                </button>
+
+            </div>
+
+            <div
+                class="coupon-message"
+                id="couponMessage">
+            </div>
+
+        </div>
+
+
+        <!-- PRICE SUMMARY -->
+
+        <div class="price-summary">
+
+            <div>
+                <span>Subtotal</span>
+                <strong id="cartSubtotal">
+                    Rs. 0
+                </strong>
+            </div>
+
+            <div>
+                <span>Delivery</span>
+                <strong id="deliveryFee">
+                    Rs. 200
+                </strong>
+            </div>
+
+            <div
+                class="discount-row"
+                id="discountRow">
+
+                <span>Discount</span>
+
+                <strong id="discountAmount">
+                    - Rs. 0
+                </strong>
+
+            </div>
+
+            <div class="total-row">
+
+                <span>Total</span>
+
+                <strong id="cartTotal">
+                    Rs. 200
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHECKOUT -->
+
+        <button
+            class="checkout-btn"
+            id="checkoutBtn">
+
+            <span>
+                Proceed To Checkout
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+
+        <div class="secure-payment">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            Secure & Safe Ordering
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================================================
+     CHECKOUT MODAL
+     ========================================================= -->
+
+<div
+    class="checkout-overlay"
+    id="checkoutOverlay">
+
+    <div class="checkout-modal">
+
+
+        <!-- CHECKOUT HEADER -->
+
+        <div class="checkout-header">
+
+            <div>
+
+                <small>Almost Done</small>
+
+                <h2>Complete Your Order</h2>
+
+            </div>
+
+            <button
+                class="checkout-close"
+                id="checkoutClose">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- CHECKOUT STEPS -->
+
+        <div class="checkout-steps">
+
+            <div class="checkout-step active">
+
+                <span>1</span>
+
+                <small>Details</small>
+
+            </div>
+
+            <div class="step-line"></div>
+
+            <div class="checkout-step">
+
+                <span>2</span>
+
+                <small>Payment</small>
+
+            </div>
+
+            <div class="step-line"></div>
+
+            <div class="checkout-step">
+
+                <span>3</span>
+
+                <small>Done</small>
+
+            </div>
+
+        </div>
+
+
+        <!-- CUSTOMER FORM -->
+
+        <form
+            id="checkoutForm"
+            class="checkout-form">
+
+
+            <div class="form-section-title">
+
+                <i class="fa-solid fa-user"></i>
+
+                Customer Information
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="customerName">
+                        Full Name
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <input
+                            type="text"
+                            id="customerName"
+                            placeholder="Enter your name"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="customerPhone">
+                        Phone Number
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        <input
+                            type="tel"
+                            id="customerPhone"
+                            placeholder="03XXXXXXXXX"
+                            required>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="customerAddress">
+                    Delivery Address
+                </label>
+
+                <div class="input-wrap textarea-wrap">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <textarea
+                        id="customerAddress"
+                        placeholder="Enter complete delivery address"
+                        required></textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="deliveryDate">
+                        Delivery Date
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                        <input
+                            type="date"
+                            id="deliveryDate"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="deliveryTime">
+                        Preferred Time
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <i class="fa-regular fa-clock"></i>
+
+                        <select id="deliveryTime" required>
+
+                            <option value="">
+                                Select time
+                            </option>
+
+                            <option>
+                                10:00 AM - 12:00 PM
+                            </option>
+
+                            <option>
+                                12:00 PM - 02:00 PM
+                            </option>
+
+                            <option>
+                                02:00 PM - 04:00 PM
+                            </option>
+
+                            <option>
+                                04:00 PM - 06:00 PM
+                            </option>
+
+                            <option>
+                                06:00 PM - 08:00 PM
+                            </option>
+
+                            <option>
+                                08:00 PM - 10:00 PM
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT -->
+
+            <div class="form-section-title payment-title">
+
+                <i class="fa-solid fa-credit-card"></i>
+
+                Payment Method
+
+            </div>
+
+
+            <div class="payment-options">
+
+
+                <label class="payment-option">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="cod"
+                        checked>
+
+                    <div class="payment-card">
+
+                        <div class="payment-icon">
+                            💵
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Cash on Delivery
+                            </strong>
+
+                            <small>
+                                Pay when your cake arrives
+                            </small>
+
+                        </div>
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                    </div>
+
+                </label>
+
+
+                <label class="payment-option">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="bank">
+
+                    <div class="payment-card">
+
+                        <div class="payment-icon">
+                            🏦
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Bank Transfer
+                            </strong>
+
+                            <small>
+                                Transfer before delivery
+                            </small>
+
+                        </div>
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                    </div>
+
+                </label>
+
+
+                <label class="payment-option">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="jazzcash">
+
+                    <div class="payment-card">
+
+                        <div class="payment-icon">
+                            📱
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Mobile Payment
+                            </strong>
+
+                            <small>
+                                Contact us for payment details
+                            </small>
+
+                        </div>
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <!-- ORDER NOTE -->
+
+            <div class="form-group">
+
+                <label for="orderNote">
+                    Special Instructions
+                    <span>(Optional)</span>
+                </label>
+
+                <div class="input-wrap textarea-wrap">
+
+                    <i class="fa-regular fa-message"></i>
+
+                    <textarea
+                        id="orderNote"
+                        placeholder="Example: Write Happy Birthday Sana on the cake">
+                    </textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- FINAL ORDER -->
+
+            <div class="checkout-summary">
+
+                <div>
+
+                    <span>
+                        Items
+                    </span>
+
+                    <strong id="checkoutItems">
+                        0
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="checkoutTotal">
+                        Rs. 0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="place-order-btn">
+
+                <i class="fa-solid fa-check"></i>
+
+                Place Order
+
+            </button>
+
+
+            <p class="checkout-contact">
+
+                Need help?
+
+                <a href="tel:03015045169">
+                    03015045169
+                </a>
+
+            </p>
+
+        </form>
+
+
+        <!-- SUCCESS SCREEN -->
+
+        <div
+            class="order-success"
+            id="orderSuccess">
+
+            <div class="success-animation">
+
+                <i class="fa-solid fa-check"></i>
+
+            </div>
+
+            <h2>
+                Order Received! 🎉
+            </h2>
+
+            <p>
+                Thank you for ordering from
+                Sweet Cake House.
+            </p>
+
+            <div class="order-number">
+
+                Order ID:
+
+                <strong id="orderId">
+                    SCH-000000
+                </strong>
+
+            </div>
+
+            <p class="success-small">
+
+                We will contact you on
+                <strong>03015045169</strong>
+                to confirm your order.
+
+            </p>
+
+            <button
+                class="btn btn-primary"
+                id="successClose">
+
+                Continue Shopping
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PART 3 CSS
+     ========================================================= -->
+
+<style>
+
+    /* =========================================================
+       CART OVERLAY
+       ========================================================= */
+
+    .cart-overlay {
+
+        position: fixed;
+
+        inset: 0;
+
+        background:
+            rgba(20, 10, 15, .55);
+
+        backdrop-filter:
+            blur(4px);
+
+        z-index: 99990;
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        transition: .35s;
+
+    }
+
+
+    .cart-overlay.active {
+
+        opacity: 1;
+
+        visibility: visible;
+
+    }
+
+
+    /* =========================================================
+       CART DRAWER
+       ========================================================= */
+
+    .cart-drawer {
+
+        position: fixed;
+
+        right: -500px;
+
+        top: 0;
+
+        width: min(450px, 100%);
+
+        height: 100vh;
+
+        background: white;
+
+        z-index: 99999;
+
+        display: flex;
+
+        flex-direction: column;
+
+        box-shadow:
+            -15px 0 50px rgba(0,0,0,.15);
+
+        transition:
+            right .4s cubic-bezier(.77,0,.18,1);
+
+    }
+
+
+    .cart-drawer.active {
+
+        right: 0;
+
+    }
+
+
+    /* =========================================================
+       CART HEADER
+       ========================================================= */
+
+    .cart-header {
+
+        padding: 25px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        border-bottom:
+            1px solid #f1eaed;
+
+    }
+
+
+    .cart-header small {
+
+        color: #ff4f91;
+
+        text-transform: uppercase;
+
+        letter-spacing: 1.5px;
+
+        font-size: 9px;
+
+        font-weight: 800;
+
+    }
+
+
+    .cart-header h2 {
+
+        font-size: 22px;
+
+        margin-top: 3px;
+
+    }
+
+
+    .cart-close {
+
+        width: 40px;
+
+        height: 40px;
+
+        border: none;
+
+        background: #fff0f6;
+
+        color: #ff4f91;
+
+        border-radius: 12px;
+
+        font-size: 16px;
+
+        transition: .3s;
+
+    }
+
+
+    .cart-close:hover {
+
+        background: #ff4f91;
+
+        color: white;
+
+        transform: rotate(90deg);
+
+    }
+
+
+    /* =========================================================
+       CART ITEMS
+       ========================================================= */
+
+    .cart-items {
+
+        flex: 1;
+
+        overflow-y: auto;
+
+        padding: 18px 22px;
+
+    }
+
+
+    .cart-item {
+
+        display: grid;
+
+        grid-template-columns: 75px 1fr auto;
+
+        gap: 12px;
+
+        align-items: center;
+
+        padding: 13px;
+
+        border: 1px solid #f2eaed;
+
+        border-radius: 16px;
+
+        margin-bottom: 12px;
+
+        animation:
+            cartItemIn .3s ease;
+
+    }
+
+
+    @keyframes cartItemIn {
+
+        from {
+
+            opacity: 0;
+
+            transform:
+                translateX(15px);
+
+        }
+
+        to {
+
+            opacity: 1;
+
+            transform:
+                translateX(0);
+
+        }
+
+    }
+
+
+    .cart-item-image {
+
+        width: 75px;
+
+        height: 75px;
+
+        border-radius: 14px;
+
+        display: grid;
+
+        place-items: center;
+
+        background:
+            linear-gradient(
+                145deg,
+                #fff0f6,
+                #ffe0eb
+            );
+
+        font-size: 38px;
+
+    }
+
+
+    .cart-item-info h4 {
+
+        font-size: 13px;
+
+        margin-bottom: 4px;
+
+    }
+
+
+    .cart-item-price {
+
+        color: #ff4f91;
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        margin-bottom: 9px;
+
+    }
+
+
+    .cart-quantity {
+
+        display: flex;
+
+        align-items: center;
+
+        width: fit-content;
+
+        border: 1px solid #eee;
+
+        border-radius: 9px;
+
+        overflow: hidden;
+
+    }
+
+
+    .cart-quantity button {
+
+        width: 27px;
+
+        height: 27px;
+
+        border: none;
+
+        background: white;
+
+        color: #ff4f91;
+
+        font-size: 15px;
+
+    }
+
+
+    .cart-quantity span {
+
+        width: 28px;
+
+        text-align: center;
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+    }
+
+
+    .cart-item-total {
+
+        text-align: right;
+
+    }
+
+
+    .cart-item-total strong {
+
+        font-size: 12px;
+
+    }
+
+
+    .remove-cart-item {
+
+        border: none;
+
+        background: none;
+
+        color: #bbb;
+
+        margin-top: 7px;
+
+        font-size: 11px;
+
+        transition: .2s;
+
+    }
+
+
+    .remove-cart-item:hover {
+
+        color: #ff4f91;
+
+    }
+
+
+    /* =========================================================
+       EMPTY CART
+       ========================================================= */
+
+    .empty-cart {
+
+        flex: 1;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        text-align: center;
+
+        padding: 30px;
+
+    }
+
+
+    .empty-cart-icon {
+
+        width: 100px;
+
+        height: 100px;
+
+        border-radius: 50%;
+
+        background: #fff0f6;
+
+        display: grid;
+
+        place-items: center;
+
+        font-size: 50px;
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .empty-cart h3 {
+
+        margin-bottom: 7px;
+
+    }
+
+
+    .empty-cart p {
+
+        color: #999;
+
+        font-size: 12px;
+
+        margin-bottom: 20px;
+
+    }
+
+
+    /* =========================================================
+       CART FOOTER
+       ========================================================= */
+
+    .cart-footer {
+
+        padding: 20px 22px;
+
+        border-top:
+            1px solid #f1eaed;
+
+        background: #fff;
+
+    }
+
+
+    .coupon-box {
+
+        margin-bottom: 15px;
+
+    }
+
+
+    .coupon-title {
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        margin-bottom: 7px;
+
+        color: #555;
+
+    }
+
+
+    .coupon-title i {
+
+        color: #ff4f91;
+
+        margin-right: 5px;
+
+    }
+
+
+    .coupon-input {
+
+        display: flex;
+
+        border: 1px solid #eee;
+
+        border-radius: 10px;
+
+        overflow: hidden;
+
+    }
+
+
+    .coupon-input input {
+
+        flex: 1;
+
+        min-width: 0;
+
+        border: none;
+
+        outline: none;
+
+        padding: 11px;
+
+        font-size: 11px;
+
+    }
+
+
+    .coupon-input button {
+
+        border: none;
+
+        padding: 0 16px;
+
+        background: #24151d;
+
+        color: white;
+
+        font-size: 10px;
+
+        font-weight: 70
+      <!-- ============================================================
+     PART 4 — OFFERS + CUSTOM CAKE + WHATSAPP ORDER
+=============================================================== -->
+
+<style>
+/* ============================================================
+   OFFERS SECTION
+=============================================================== */
+
+.offers-section {
+    padding: 80px 20px;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(255, 105, 180, .12), transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(255, 192, 203, .18), transparent 30%),
+        #fff8fb;
+}
+
+.section-heading {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto 45px;
+}
+
+.section-heading .mini-title {
+    display: inline-block;
+    background: #ffe4ef;
+    color: #d63384;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+}
+
+.section-heading h2 {
+    font-size: clamp(30px, 5vw, 52px);
+    color: #3a1c2b;
+    margin: 0 0 14px;
+    line-height: 1.1;
+}
+
+.section-heading p {
+    color: #806572;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.offers-grid {
+    max-width: 1250px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.offer-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    padding: 32px;
+    min-height: 270px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(214, 51, 132, .12);
+    box-shadow: 0 20px 50px rgba(99, 34, 66, .08);
+    transition: .35s ease;
+}
+
+.offer-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 65px rgba(99, 34, 66, .14);
+}
+
+.offer-card:nth-child(1) {
+    background: linear-gradient(135deg, #ffe4ef, #fff);
+}
+
+.offer-card:nth-child(2) {
+    background: linear-gradient(135deg, #fff0d9, #fff);
+}
+
+.offer-card:nth-child(3) {
+    background: linear-gradient(135deg, #eadfff, #fff);
+}
+
+.offer-card::after {
+    content: "";
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    right: -55px;
+    top: -55px;
+    background: rgba(255, 255, 255, .45);
+}
+
+.offer-icon {
+    width: 62px;
+    height: 62px;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, .75);
+    font-size: 30px;
+    box-shadow: 0 8px 25px rgba(80, 30, 55, .08);
+}
+
+.offer-card h3 {
+    color: #3a1c2b;
+    margin: 18px 0 8px;
+    font-size: 25px;
+}
+
+.offer-card p {
+    color: #705966;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.offer-code {
+    margin-top: 20px;
+    display: inline-flex;
+    width: fit-content;
+    padding: 9px 14px;
+    background: #fff;
+    border: 1px dashed #d63384;
+    color: #d63384;
+    border-radius: 10px;
+    font-weight: 800;
+    letter-spacing: .5px;
+}
+
+
+/* ============================================================
+   CUSTOM CAKE SECTION
+=============================================================== */
+
+.custom-section {
+    padding: 90px 20px;
+    background: #fff;
+}
+
+.custom-container {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 55px;
+    align-items: center;
+}
+
+.custom-preview {
+    min-height: 600px;
+    border-radius: 35px;
+    padding: 35px;
+    background:
+        linear-gradient(145deg, rgba(255,255,255,.75), rgba(255,228,239,.8)),
+        #ffe4ef;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(99, 34, 66, .12);
+}
+
+.custom-preview::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.5);
+    right: -120px;
+    top: -100px;
+}
+
+.custom-preview-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.custom-preview-content .cake-emoji {
+    font-size: 130px;
+    margin-top: 70px;
+    filter: drop-shadow(0 20px 20px rgba(70,20,40,.15));
+    animation: cakeFloat 3s ease-in-out infinite;
+}
+
+@keyframes cakeFloat {
+    0%,100% {
+        transform: translateY(0) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(-14px) rotate(2deg);
+    }
+}
+
+.custom-preview h3 {
+    color: #3a1c2b;
+    font-size: 30px;
+    margin: 25px 0 10px;
+}
+
+.custom-preview p {
+    color: #806572;
+    line-height: 1.7;
+}
+
+.preview-price {
+    margin: 25px auto;
+    width: fit-content;
+    padding: 12px 22px;
+    background: white;
+    border-radius: 50px;
+    color: #d63384;
+    font-weight: 900;
+    font-size: 23px;
+    box-shadow: 0 10px 30px rgba(70,20,40,.08);
+}
+
+.custom-form {
+    background: #fffafd;
+    border: 1px solid #f5dce7;
+    padding: 40px;
+    border-radius: 32px;
+    box-shadow: 0 25px 70px rgba(90,30,60,.07);
+}
+
+.custom-form-header h2 {
+    margin: 0 0 10px;
+    color: #3a1c2b;
+    font-size: 38px;
+}
+
+.custom-form-header p {
+    margin: 0 0 30px;
+    color: #806572;
+    line-height: 1.7;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    color: #4a2938;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ead4df;
+    background: #fff;
+    color: #442535;
+    border-radius: 14px;
+    padding: 14px 15px;
+    outline: none;
+    font-family: inherit;
+    font-size: 15px;
+    transition: .25s;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #d63384;
+    box-shadow: 0 0 0 4px rgba(214,51,132,.08);
+}
+
+.custom-submit {
+    width: 100%;
+    margin-top: 24px;
+    border: 0;
+    padding: 17px 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #d63384, #ff5ca8);
+    color: white;
+    font-weight: 900;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(214,51,132,.2);
+    transition: .3s;
+}
+
+.custom-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(214,51,132,.3);
+}
+
+
+/* ============================================================
+   WHATSAPP ORDER AREA
+=============================================================== */
+
+.whatsapp-section {
+    padding: 75px 20px;
+    background: linear-gradient(135deg, #fff0f6, #fff8fb);
+}
+
+.whatsapp-box {
+    max-width: 1000px;
+    margin: auto;
+    padding: 45px;
+    border-radius: 32px;
+    background: white;
+    border: 1px solid #f2d8e4;
+    box-shadow: 0 25px 70px rgba(80,25,50,.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.whatsapp-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.whatsapp-icon {
+    min-width: 72px;
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
+    display: grid;
+    place-items: center;
+    font-size: 38px;
+    background: #e7fbea;
+}
+
+.whatsapp-info h3 {
+    margin: 0 0 7px;
+    color: #3a1c2b;
+    font-size: 25px;
+}
+
+.whatsapp-info p {
+    margin: 0;
+    color: #806572;
+    line-height: 1.6;
+}
+
+.whatsapp-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 25px;
+    border-radius: 15px;
+    text-decoration: none;
+    background: #25D366;
+    color: white;
+    font-weight: 900;
+    box-shadow: 0 12px 30px rgba(37,211,102,.2);
+    transition: .3s;
+}
+
+.whatsapp-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(37,211,102,.3);
+}
+
+
+/* ============================================================
+   FLOATING WHATSAPP
+=============================================================== */
+
+.floating-whatsapp {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: #25D366;
+    color: white;
+    display: grid;
+    place-items: center;
+    text-decoration: none;
+    font-size: 31px;
+    z-index: 9990;
+    box-shadow: 0 15px 35px rgba(37,211,102,.35);
+    transition: .3s;
+    animation: whatsappPulse 2.5s infinite;
+}
+
+.floating-whatsapp:hover {
+    transform: scale(1.1);
+}
+
+@keyframes whatsappPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37,211,102,.35);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(37,211,102,0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37,211,102,0);
+    }
+}
+
+
+/* ============================================================
+   CUSTOM ORDER SUCCESS
+=============================================================== */
+
+.custom-success {
+    display: none;
+    text-align: center;
+    padding: 35px 20px;
+    margin-top: 25px;
+    background: #f0fff5;
+    border: 1px solid #bdebcf;
+    border-radius: 20px;
+}
+
+.custom-success.show {
+    display: block;
+    animation: successAppear .5s ease;
+}
+
+@keyframes successAppear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.custom-success .success-icon {
+    font-size: 50px;
+}
+
+.custom-success h3 {
+    color: #167a3c;
+    margin: 12px 0 7px;
+}
+
+.custom-success p {
+    color: #47705a;
+    margin: 0;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+=============================================================== */
+
+@media (max-width: 950px) {
+
+    .offers-grid {
+        grid-template-columns: 1fr;
+        max-width: 650px;
+    }
+
+    .custom-container {
+        grid-template-columns: 1fr;
+        max-width: 750px;
+    }
+
+    .custom-preview {
+        min-height: 450px;
+    }
+
+    .custom-preview-content .cake-emoji {
+        margin-top: 35px;
+    }
+
+    .whatsapp-box {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .whatsapp-info {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .offers-section,
+    .custom-section,
+    .whatsapp-section {
+        padding: 55px 14px;
+    }
+
+    .offer-card {
+        padding: 25px;
+    }
+
+    .custom-form {
+        padding: 24px 17px;
+    }
+
+    .custom-form-header h2 {
+        font-size: 30px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .custom-preview {
+        min-height: 390px;
+        padding: 25px;
+    }
+
+    .custom-preview-content .cake-emoji {
+        font-size: 95px;
+    }
+
+    .whatsapp-box {
+        padding: 30px 20px;
+    }
+
+    .whatsapp-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .floating-whatsapp {
+        right: 15px;
+        bottom: 15px;
+        width: 56px;
+        height: 56px;
+        font-size: 27px;
+    }
+}
+</style>
+
+
+<!-- ============================================================
+     OFFERS
+=============================================================== -->
+
+<section class="offers-section" id="offers">
+
+    <div class="section-heading">
+
+        <span class="mini-title">Sweet Deals</span>
+
+        <h2>Special Offers For You 💕</h2>
+
+        <p>
+            Apne favourite cakes par special discount hasil karein
+            aur har celebration ko aur bhi sweet banayein.
+        </p>
+
+    </div>
+
+
+    <div class="offers-grid">
+
+        <div class="offer-card">
+
+            <div>
+
+                <div class="offer-icon">
+                    🎂
+                </div>
+
+                <h3>10% OFF</h3>
+
+                <p>
+                    Apni first cake order par 10% ka special
+                    welcome discount hasil karein.
+                </p>
+
+            </div>
+
+            <span class="offer-code">
+                SWEET10
+            </span>
+
+        </div>
+
+
+        <div class="offer-card">
+
+            <div>
+
+                <div class="offer-icon">
+                    🍰
+                </div>
+
+                <h3>15% OFF</h3>
+
+                <p>
+                    Selected premium cakes par 15% tak
+                    ka discount available hai.
+                </p>
+
+            </div>
+
+            <span class="offer-code">
+                CAKE15
+            </span>
+
+        </div>
+
+
+        <div class="offer-card">
+
+            <div>
+
+                <div class="offer-icon">
+                    🎁
+                </div>
+
+                <h3>20% OFF</h3>
+
+                <p>
+                    New customers ke liye limited-time
+                    welcome offer available hai.
+                </p>
+
+            </div>
+
+            <span class="offer-code">
+                WELCOME20
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     CUSTOM CAKE
+=============================================================== -->
+
+<section class="custom-section" id="custom-cake">
+
+    <div class="custom-container">
+
+
+        <!-- PREVIEW -->
+
+        <div class="custom-preview">
+
+            <div class="custom-preview-content">
+
+                <div class="cake-emoji">
+                    🎂
+                </div>
+
+                <h3 id="customCakeTitle">
+                    Your Dream Cake
+                </h3>
+
+                <p>
+                    Apni pasand ka flavour, size aur message
+                    choose karke apna perfect cake create karein.
+                </p>
+
+                <div class="preview-price">
+                    Rs. <span id="customPrice">2500</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="custom-form">
+
+            <div class="custom-form-header">
+
+                <h2>Create Your Cake 🎀</h2>
+
+                <p>
+                    Cake ki details select karein aur hum aapke
+                    liye special cake prepare karenge.
+                </p>
+
+            </div>
+
+
+            <form id="customCakeForm">
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="customFlavor">
+                            Cake Flavor
+                        </label>
+
+                        <select id="customFlavor" required>
+
+                            <option value="Chocolate">
+                                Chocolate
+                            </option>
+
+                            <option value="Vanilla">
+                                Vanilla
+                            </option>
+
+                            <option value="Red Velvet">
+                                Red Velvet
+                            </option>
+
+                            <option value="Strawberry">
+                                Strawberry
+                            </option>
+
+                            <option value="Lotus">
+                                Lotus
+                            </option>
+
+                            <option value="Oreo">
+                                Oreo
+                            </option>
+
+                            <option value="Pistachio">
+                                Pistachio
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="customSize">
+                            Cake Size
+                        </label>
+
+                        <select id="customSize" required>
+
+                            <option value="1 Pound">
+                                1 Pound
+                            </option>
+
+                            <option value="2 Pounds">
+                                2 Pounds
+                            </option>
+
+                            <option value="3 Pounds">
+                                3 Pounds
+                            </option>
+
+                            <option value="4 Pounds">
+                                4 Pounds
+                            </option>
+
+                            <option value="5 Pounds">
+                                5 Pounds
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="customTheme">
+                            Cake Theme
+                        </label>
+
+                        <select id="customTheme">
+
+                            <option value="Pink">
+                                Pink 🎀
+                            </option>
+
+                            <option value="Princess">
+                                Princess 👑
+                            </option>
+
+                            <option value="Birthday">
+                                Birthday 🎉
+                            </option>
+
+                            <option value="Wedding">
+                                Wedding 💍
+                            </option>
+
+                            <option value="Kids">
+                                Kids 🧸
+                            </option>
+
+                            <option value="Floral">
+                                Floral 🌸
+                            </option>
+
+                            <option value="Elegant">
+                                Elegant ✨
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="customMessage">
+                            Cake Message
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customMessage"
+                            placeholder="Happy Birthday..."
+                            maxlength="40"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="customName">
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customName"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="customPhone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="customPhone"
+                            placeholder="03XX XXXXXXX"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label for="customNotes">
+                            Extra Instructions
+                        </label>
+
+                        <textarea
+                            id="customNotes"
+                            placeholder="Cake par kis tarah ka design chahiye?..."
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="custom-submit"
+                >
+                    🎂 Create My Custom Cake
+                </button>
+
+
+            </form>
+
+
+            <div
+                class="custom-success"
+                id="customSuccess"
+            >
+
+                <div class="success-icon">
+                    🎉
+                </div>
+
+                <h3>
+                    Custom Cake Request Sent!
+                </h3>
+
+                <p>
+                    Thank you! Hum aapki cake request check
+                    karke aapse contact karenge.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     WHATSAPP ORDER
+=============================================================== -->
+
+<section cl
+  <!-- ============================================================
+     PART 5 — REVIEWS + FAQ + ABOUT + GALLERY + NEWSLETTER
+=============================================================== -->
+
+<style>
+
+/* ============================================================
+   PART 5 GLOBAL
+=============================================================== */
+
+.p5-section {
+    position: relative;
+    padding: 90px 20px;
+}
+
+.p5-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.p5-heading {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 50px;
+}
+
+.p5-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 17px;
+    border-radius: 50px;
+    background: #ffe5ef;
+    color: #d63384;
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.p5-heading h2 {
+    margin: 15px 0 12px;
+    color: #3a1c2b;
+    font-size: clamp(30px, 5vw, 50px);
+    line-height: 1.1;
+}
+
+.p5-heading p {
+    margin: 0;
+    color: #806572;
+    line-height: 1.8;
+}
+
+
+/* ============================================================
+   CUSTOMER REVIEWS
+=============================================================== */
+
+.reviews-section {
+    background:
+        radial-gradient(
+            circle at 0% 0%,
+            rgba(255, 182, 210, .28),
+            transparent 35%
+        ),
+        #fff8fb;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.review-card {
+    position: relative;
+    padding: 30px;
+    background: rgba(255,255,255,.9);
+    border: 1px solid #f2dce6;
+    border-radius: 27px;
+    box-shadow: 0 20px 55px rgba(80, 30, 55, .07);
+    transition: .35s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 28px 65px rgba(80, 30, 55, .12);
+}
+
+.review-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.review-user {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.review-avatar {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg,#ffd4e5,#fff0f6);
+    font-size: 24px;
+}
+
+.review-user strong {
+    display: block;
+    color: #432534;
+    font-size: 15px;
+}
+
+.review-user span {
+    display: block;
+    color: #9a7c89;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.review-stars {
+    color: #f5a623;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.review-text {
+    color: #705966;
+    line-height: 1.8;
+    margin: 22px 0 0;
+}
+
+.review-date {
+    display: block;
+    margin-top: 18px;
+    color: #b0929f;
+    font-size: 12px;
+}
+
+
+/* ============================================================
+   REVIEW FORM
+=============================================================== */
+
+.review-form-box {
+    max-width: 700px;
+    margin: 45px auto 0;
+    padding: 35px;
+    border-radius: 28px;
+    background: white;
+    border: 1px solid #f0dce6;
+    box-shadow: 0 20px 55px rgba(80,30,55,.07);
+}
+
+.review-form-box h3 {
+    text-align: center;
+    color: #3a1c2b;
+    font-size: 25px;
+    margin: 0 0 25px;
+}
+
+.review-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.review-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.review-form-group.full {
+    grid-column: 1 / -1;
+}
+
+.review-form-group label {
+    color: #4b2938;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.review-form-group input,
+.review-form-group textarea,
+.review-form-group select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 13px;
+    border: 1px solid #ead4df;
+    background: #fff;
+    outline: none;
+    font-family: inherit;
+    color: #432534;
+}
+
+.review-form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.review-form-group input:focus,
+.review-form-group textarea:focus,
+.review-form-group select:focus {
+    border-color: #d63384;
+    box-shadow: 0 0 0 4px rgba(214,51,132,.08);
+}
+
+.review-submit {
+    width: 100%;
+    margin-top: 18px;
+    padding: 15px;
+    border: 0;
+    border-radius: 14px;
+    background: linear-gradient(135deg,#d63384,#ff5ca8);
+    color: white;
+    font-weight: 900;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.review-submit:hover {
+    transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   FAQ
+=============================================================== */
+
+.faq-section {
+    background: #fff;
+}
+
+.faq-list {
+    max-width: 900px;
+    margin: auto;
+}
+
+.faq-item {
+    border: 1px solid #efdce5;
+    border-radius: 18px;
+    margin-bottom: 14px;
+    background: #fffafd;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.faq-item.active {
+    border-color: #e6b8cc;
+    box-shadow: 0 12px 35px rgba(80,30,55,.07);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 21px 22px;
+    background: transparent;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    text-align: left;
+    color: #3f2431;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.faq-icon {
+    min-width: 31px;
+    width: 31px;
+    height: 31px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #ffe5ef;
+    color: #d63384;
+    font-size: 18px;
+    transition: .3s;
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
+}
+
+.faq-answer-inner {
+    padding: 0 22px 22px;
+    color: #806572;
+    line-height: 1.8;
+}
+
+
+/* ============================================================
+   ABOUT US
+=============================================================== */
+
+.about-section {
+    background:
+        linear-gradient(
+            135deg,
+            #fff4f8 0%,
+            #fff 50%,
+            #fff3f8 100%
+        );
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 65px;
+    align-items: center;
+}
+
+.about-visual {
+    min-height: 530px;
+    position: relative;
+    border-radius: 35px;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            145deg,
+            #ffd9e8,
+            #fff0f6
+        );
+    box-shadow: 0 30px 75px rgba(80,30,55,.12);
+}
+
+.about-main-cake {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 155px;
+    filter: drop-shadow(0 25px 20px rgba(80,30,55,.14));
+}
+
+.about-decoration {
+    position: absolute;
+    font-size: 35px;
+}
+
+.about-decoration.one {
+    top: 45px;
+    left: 45px;
+}
+
+.about-decoration.two {
+    right: 45px;
+    top: 100px;
+}
+
+.about-decoration.three {
+    bottom: 55px;
+    left: 70px;
+}
+
+.about-decoration.four {
+    right: 65px;
+    bottom: 45px;
+}
+
+.about-content .p5-badge {
+    margin-bottom: 15px;
+}
+
+.about-content h2 {
+    color: #3a1c2b;
+    font-size: clamp(32px, 5vw, 50px);
+    margin: 0 0 18px;
+    line-height: 1.1;
+}
+
+.about-content > p {
+    color: #806572;
+    line-height: 1.9;
+    margin: 0 0 25px;
+}
+
+.about-points {
+    display: grid;
+    gap: 15px;
+}
+
+.about-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+}
+
+.about-point-icon {
+    min-width: 42px;
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    background: #ffe5ef;
+}
+
+.about-point strong {
+    color: #432534;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.about-point span {
+    color: #806572;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   STATISTICS
+=============================================================== */
+
+.about-stats {
+    margin-top: 35px;
+    padding-top: 28px;
+    border-top: 1px solid #efdce5;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.about-stat {
+    text-align: center;
+}
+
+.about-stat strong {
+    display: block;
+    color: #d63384;
+    font-size: 27px;
+    font-weight: 1000;
+}
+
+.about-stat span {
+    color: #806572;
+    font-size: 12px;
+}
+
+
+/* ============================================================
+   GALLERY
+=============================================================== */
+
+.gallery-section {
+    background: #fff8fb;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.gallery-card {
+    position: relative;
+    min-height: 245px;
+    border-radius: 23px;
+    overflow: hidden;
+    background: linear-gradient(135deg,#ffe1ec,#fff);
+    border: 1px solid #f1dce5;
+    cursor: pointer;
+    transition: .35s ease;
+}
+
+.gallery-card:hover {
+    transform: scale(1.025);
+    box-shadow: 0 20px 50px rgba(80,30,55,.13);
+}
+
+.gallery-cake {
+    height: 100%;
+    min-height: 245px;
+    display: grid;
+    place-items: center;
+    font-size: 100px;
+    transition: .35s;
+}
+
+.gallery-card:hover .gallery-cake {
+    transform: scale(1.08);
+}
+
+.gallery-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    background: linear-gradient(
+        transparent,
+        rgba(45,18,31,.72)
+    );
+    color: white;
+}
+
+.gallery-overlay strong {
+    display: block;
+    font-size: 16px;
+}
+
+.gallery-overlay span {
+    display: block;
+    font-size: 12px;
+    opacity: .85;
+    margin-top: 4px;
+}
+
+
+/* ============================================================
+   GALLERY MODAL
+=============================================================== */
+
+.gallery-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(28,10,20,.78);
+    backdrop-filter: blur(7px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 10020;
+}
+
+.gallery-modal.show {
+    display: flex;
+}
+
+.gallery-modal-box {
+    width: min(650px,100%);
+    background: white;
+    border-radius: 30px;
+    padding: 35px;
+    text-align: center;
+    position: relative;
+    animation: galleryPop .3s ease;
+}
+
+@keyframes galleryPop {
+    from {
+        opacity: 0;
+        transform: scale(.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.gallery-modal-cake {
+    font-size: 145px;
+    margin: 15px 0;
+}
+
+.gallery-modal-box h3 {
+    color: #3a1c2b;
+    margin: 0 0 8px;
+    font-size: 28px;
+}
+
+.gallery-modal-box p {
+    color: #806572;
+    margin: 0;
+}
+
+.gallery-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: #ffe5ef;
+    color: #d63384;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+/* ============================================================
+   NEWSLETTER
+=============================================================== */
+
+.newsletter-section {
+    padding: 85px 20px;
+    background: linear-gradient(135deg,#d63384,#ff77b5);
+}
+
+.newsletter-box {
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+    color: white;
+}
+
+.newsletter-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    display: grid;
+    place-items: center;
+    border-radius: 22px;
+    background: rgba(255,255,255,.18);
+    font-size: 32px;
+}
+
+.newsletter-box h2 {
+    margin: 0 0 12px;
+    font-size: clamp(30px,5vw,48px);
+}
+
+.newsletter-box p {
+    margin: 0 auto 28px;
+    max-width: 650px;
+    line-height: 1.8;
+    opacity: .9;
+}
+
+.newsletter-form {
+    max-width: 570px;
+    margin: auto;
+    display: flex;
+    padding: 7px;
+    border-radius: 17px;
+    background: white;
+    box-shadow: 0 20px 50px rgba(70,10,40,.18);
+}
+
+.newsletter-form input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    padding: 13px 16px;
+    color: #432534;
+    font-family: inherit;
+    font-size: 15px;
+    background: transparent;
+}
+
+.newsletter-form button {
+    border: 0;
+    border-radius: 12px;
+    padding: 13px 22px;
+    background: #3a1c2b;
+    color: white;
+    font-weight: 900;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.newsletter-form button:hover {
+    transform: translateY(-2px);
+}
+
+.newsletter-message {
+    min-height: 22px;
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+/* ============================================================
+   PART 5 RESPONSIVE
+=============================================================== */
+
+@media (max-width: 950px) {
+
+    .reviews-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+@media (max-width: 620px) {
+
+    .p5-section {
+        padding: 60px 14px;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .review-form-box {
+        padding: 24px 17px;
+    }
+
+    .review-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .review-form-group.full {
+        grid-column: auto;
+    }
+
+    .about-visual {
+        min-height: 390px;
+    }
+
+    .about-main-cake {
+        font-size: 105px;
+    }
+
+    .about-stats {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .about-stat strong {
+        font-size: 21px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .gallery-card,
+    .gallery-cake {
+        min-height: 170px;
+    }
+
+    .gallery-cake {
+        font-size: 70px;
+    }
+
+    .gallery-overlay {
+        padding: 12px;
+    }
+
+    .gallery-overlay strong {
+        font-size: 13px;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+        background: transparent;
+        padding: 0;
+        gap: 10px;
+    }
+
+    .newsletter-form input {
+        background: white;
+        border-radius: 14px;
+        padding: 15px;
+    }
+
+    .newsletter-form button {
+        width: 100%;
+        padding: 15px;
+    }
+
+}
+
+
+/* ============================================================
+   REVIEW SUCCESS
+=============================================================== */
+
+.review-success {
+    display: none;
+    margin-top: 17px;
+    padding: 13px;
+    border-radius: 12px;
+    background: #effcf3;
+    color: #19733c;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.review-success.show {
+    display: block;
+}
+
+</style>
+
+
+<!-- ============================================================
+     CUSTOMER REVIEWS
+=============================================================== -->
+
+<section
+    class="p5-section reviews-section"
+    id="reviews"
+>
+
+    <div class="p5-container">
+
+        <div class="p5-heading">
+
+            <span class="p5-badge">
+                ⭐ Happy Customers
+            </span>
+
+            <h2>
+                What Our Customers Say
+            </h2>
+
+            <p>
+                Hamare customers ke sweet experiences aur
+                cake orders ke reviews dekhein.
+            </p>
+
+        </div>
+
+
+        <div
+            class="reviews-grid"
+            id="reviewsGrid"
+        >
+
+            <article class="review-card">
+
+                <div class="review-top">
+
+                    <div class="review-user">
+
+                        <div class="review-avatar">
+                            👩
+                        </div>
+
+                        <div>
+                            <strong>
+                                Ayesha
+                            </strong>
+
+                            <span>
+                                Verified Customer
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="review-stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+                <p class="review-text">
+                    Cake bilkul fresh tha aur decoration bhi
+                    bohat beautiful thi. Birthday ke liye
+                    perfect choice!
+                </p>
+
+                <span class="review-date">
+                    Recently
+                </span>
+
+            </article>
+
+
+            <article class="review-card">
+
+                <div class="review-top">
+
+                    <div class="review-user">
+
+                        <div class="review-avatar">
+                            👩🏻
+                        </div>
+
+                        <div>
+                            <strong>
+                                Hira
+                            </strong>
+
+                            <span>
+                                Verified Customer
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="review-stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+                <p class="review-text">
+                    Chocolate cake bohat delicious tha.
+                    Packaging bhi neat aur beautiful thi.
+                    Definitely dobara order karungi.
+                </p>
+
+                <span class="review-date">
+                    Recently
+                </span>
+
+            </article>
+
+
+            <article class="review-card">
+
+                <div class="review-top">
+
+                    <div class="review-user">
+
+                        <div class="review-avatar">
+                            👩‍🦰
+                        </div>
+
+                        <div>
+                            <strong>
+                                Sana
+                            </strong>
+
+                            <span>
+                                Verified Customer
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="review-stars">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+                <p class="review-text">
+                    Custom cake ka design exactly meri
+                    request ke according bana. Bohat pyara
+                    experience raha.
+                </p>
+
+                <span class="review-date">
+                    Recently
+                </span>
+
+            </article>
+
+        </div>
+
+
+        <!-- ADD REVIEW -->
+
+        <div class="review-form-box">
+
+            <h3>
+                Apna Review Share Karein 💕
+            </h3>
+
+            <form id="reviewForm">
+
+                <div class="review-form-grid">
+
+                    <div class="review-form-group">
+
+                        <label>
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="reviewName"
+                            placeholder="Your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="review-form-group">
+
+                        <label>
+                            Rating
+                        </label>
+
+                        <select
+                            id="reviewRating"
+                            required
+                        >
+
+                            <option value="5">
+                                ★★★★★ — 5
+                            </option>
+
+                            <option value="4">
+                                ★★★★☆ — 4
+                            </option>
+
+                            <option value="3">
+                                ★★★☆☆ — 3
+                            </option>
+
+                            <option value="2">
+                                ★★☆☆☆ — 2
+                            </option>
+
+                            <option value="1">
+                                ★☆☆☆☆ — 1
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="review-form-group full">
+
+                        <label>
+                            Your Review
+                        </label>
+
+                        <textarea
+                            id="r
+                          <!-- ============================================================
+     PART 7 — FINAL POLISH + LOADING SCREEN + FINAL HTML
+=============================================================== -->
+
+<style>
+
+/* ============================================================
+   FINAL LOADING SCREEN
+=============================================================== */
+
+#finalLoader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            #fff,
+            #ffe6f0 45%,
+            #ffc9dd 100%
+        );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        opacity .6s ease,
+        visibility .6s ease;
+}
+
+#finalLoader.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.final-loader-content {
+    text-align: center;
+    width: min(400px,90%);
+}
+
+.final-loader-cake {
+    font-size: 90px;
+    display: inline-block;
+    animation:
+        loaderCake 1.5s ease-in-out infinite;
+    filter:
+        drop-shadow(
+            0 18px 20px
+            rgba(100,30,60,.18)
+        );
+}
+
+@keyframes loaderCake {
+
+    0%,100% {
+        transform:
+            translateY(0)
+            rotate(-3deg);
+    }
+
+    50% {
+        transform:
+            translateY(-15px)
+            rotate(3deg);
+    }
+
+}
+
+.final-loader-content h1 {
+    margin: 20px 0 7px;
+    color: #d63384;
+    font-size: 34px;
+    font-weight: 1000;
+}
+
+.final-loader-content p {
+    margin: 0 0 24px;
+    color: #806572;
+}
+
+.loader-progress {
+    width: 100%;
+    height: 7px;
+    overflow: hidden;
+    border-radius: 50px;
+    background: rgba(255,255,255,.7);
+}
+
+.loader-progress-bar {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background:
+        linear-gradient(
+            90deg,
+            #d63384,
+            #ff73b3
+        );
+    animation:
+        loaderProgress 2.2s
+        ease forwards;
+}
+
+@keyframes loaderProgress {
+
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+
+}
+
+
+/* ============================================================
+   FINAL TOAST
+=============================================================== */
+
+.final-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.final-toast {
+    min-width: 260px;
+    max-width: 350px;
+    padding: 15px 18px;
+    border-radius: 15px;
+    background: #2c1822;
+    color: white;
+    box-shadow:
+        0 18px 45px
+        rgba(30,10,20,.25);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation:
+        toastIn .35s ease;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+@keyframes toastIn {
+
+    from {
+        opacity: 0;
+        transform:
+            translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateX(0);
+    }
+
+}
+
+.final-toast.hide {
+    animation:
+        toastOut .35s ease
+        forwards;
+}
+
+@keyframes toastOut {
+
+    to {
+        opacity: 0;
+        transform:
+            translateX(30px);
+    }
+
+}
+
+
+/* ============================================================
+   SCROLL PROGRESS
+=============================================================== */
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background:
+        linear-gradient(
+            90deg,
+            #d63384,
+            #ff72b2
+        );
+    z-index: 100001;
+}
+
+
+/* ============================================================
+   FINAL MOBILE IMPROVEMENTS
+=============================================================== */
+
+@media (max-width: 600px) {
+
+    .final-toast-container {
+        left: 12px;
+        right: 12px;
+        top: 12px;
+    }
+
+    .final-toast {
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .final-loader-cake {
+        font-size: 75px;
+    }
+
+    .final-loader-content h1 {
+        font-size: 29px;
+    }
+
+}
+
+</style>
+
+
+<!-- ============================================================
+     SCROLL PROGRESS BAR
+=============================================================== -->
+
+<div
+    class="scroll-progress"
+    id="scrollProgress"
+></div>
+
+
+<!-- ============================================================
+     TOAST CONTAINER
+=============================================================== -->
+
+<div
+    class="final-toast-container"
+    id="finalToastContainer"
+></div>
+
+
+<!-- ============================================================
+     FINAL LOADING SCREEN
+=============================================================== -->
+
+<div
+    id="finalLoader"
+>
+
+    <div class="final-loader-content">
+
+        <div class="final-loader-cake">
+            🎂
+        </div>
+
+        <h1>
+            Sweet Cake
+        </h1>
+
+        <p>
+            Preparing something delicious...
+        </p>
+
+        <div class="loader-progress">
+
+            <div
+                class="loader-progress-bar"
+            ></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+/* ============================================================
+   PART 7 JAVASCRIPT
+=============================================================== */
+
+
+/* ============================================================
+   GLOBAL TOAST FUNCTION
+=============================================================== */
+
+window.showToast =
+    function (message) {
+
+        const container =
+            document.getElementById(
+                "finalToastContainer"
+            );
+
+
+        if (!container) {
+
+            alert(message);
+
+            return;
+
+        }
+
+
+        const toast =
+            document.createElement(
+                "div"
+            );
+
+
+        toast.className =
+            "final-toast";
+
+
+        toast.innerHTML = `
+            <span>🍰</span>
+            <span></span>
+        `;
+
+
+        toast.querySelector(
+            "span:last-child"
+        ).textContent =
+            message;
+
+
+        container.appendChild(
+            toast
+        );
+
+
+        setTimeout(
+            function () {
+
+                toast.classList.add(
+                    "hide"
+                );
+
+
+                setTimeout(
+                    function () {
+
+                        toast.remove();
+
+                    },
+                    350
+                );
+
+            },
+            3500
+        );
+
+    };
+
+
+/* ============================================================
+   LOADING SCREEN
+=============================================================== */
+
+(function () {
+
+    const loader =
+        document.getElementById(
+            "finalLoader"
+        );
+
+
+    function hideLoader() {
+
+        if (!loader) {
+
+            return;
+
+        }
+
+
+        loader.classList.add(
+            "loader-hidden"
+        );
+
+
+        setTimeout(
+            function () {
+
+                if (loader) {
+
+                    loader.style.display =
+                        "none";
+
+                }
+
+            },
+            700
+        );
+
+    }
+
+
+    /*
+     * Normal loading finish
+     */
+
+    window.addEventListener(
+        "load",
+        function () {
+
+            setTimeout(
+                hideLoader,
+                1200
+            );
+
+        }
+    );
+
+
+    /*
+     * Safety fallback:
+     * loader will NEVER remain forever.
+     */
+
+    setTimeout(
+        hideLoader,
+        3500
+    );
+
+})();
+
+
+/* ============================================================
+   SCROLL PROGRESS
+=============================================================== */
+
+(function () {
+
+    const progress =
+        document.getElementById(
+            "scrollProgress"
+        );
+
+
+    function updateScrollProgress() {
+
+        const scrollTop =
+            window.scrollY;
+
+
+        const documentHeight =
+            document.documentElement
+                .scrollHeight -
+            window.innerHeight;
+
+
+        if (
+            documentHeight <= 0
+        ) {
+
+            progress.style.width =
+                "0%";
+
+            return;
+
+        }
+
+
+        const percentage =
+            (
+                scrollTop /
+                documentHeight
+            ) * 100;
+
+
+        progress.style.width =
+            Math.min(
+                percentage,
+                100
+            ) + "%";
+
+    }
+
+
+    window.addEventListener(
+        "scroll",
+        updateScrollProgress
+    );
+
+
+    window.addEventListener(
+        "resize",
+        updateScrollProgress
+    );
+
+
+    updateScrollProgress();
+
+})();
+
+
+/* ============================================================
+   IMAGE ERROR HANDLING
+=============================================================== */
+
+document.addEventListener(
+    "error",
+    function (event) {
+
+        const element =
+            event.target;
+
+
+        if (
+            element &&
+            element.tagName === "IMG"
+        ) {
+
+            element.style.opacity =
+                "0.35";
+
+        }
+
+    },
+    true
+);
+
+
+/* ============================================================
+   ONLINE / OFFLINE STATUS
+=============================================================== */
+
+window.addEventListener(
+    "offline",
+    function () {
+
+        showToast(
+            "Internet connection lost. Kuch features temporarily unavailable ho sakte hain."
+        );
+
+    }
+);
+
+
+window.addEventListener(
+    "online",
+    function () {
+
+        showToast(
+            "Internet connection restored! 💗"
+        );
+
+    }
+);
+
+
+/* ============================================================
+   PREVENT EMPTY HASH JUMP
+=============================================================== */
+
+document.querySelectorAll(
+    'a[href="#"]'
+).forEach(
+    function (link) {
+
+        link.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+            }
+        );
+
+    }
+);
+
+
+/* ============================================================
+   CONSOLE BRANDING
+=============================================================== */
+
+console.log(
+    "%c🎂 Sweet Cake",
+    "font-size:28px;font-weight:bold;color:#d63384;"
+);
+
+console.log(
+    "%cWebsite loaded successfully 💗",
+    "font-size:14px;color:#806572;"
+);
+
+</script>
+
+
+<!-- ============================================================
+     FINAL BODY + HTML
+=============================================================== -->
+
+</body>
+
+  </html>
